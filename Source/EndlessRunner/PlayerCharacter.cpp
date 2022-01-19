@@ -3,6 +3,8 @@
 
 #include "PlayerCharacter.h"
 
+#include "Blueprint/UserWidget.h"
+
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
@@ -15,6 +17,12 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Hud = CreateWidget(this, HUDClass);
+	if(Hud != nullptr)
+	{
+		Hud->AddToViewport(0);
+	}
 	
 }
 
@@ -62,5 +70,15 @@ void APlayerCharacter::FireBullet()
 	}
 	FActorSpawnParameters SpawnParams;
 	GetWorld()->SpawnActor<AActor>(Bullet,BulletSpawnPoint->GetComponentLocation(),GetControlRotation(),SpawnParams);
-	BulletCount--;
+	ReduceBullets(1);
+}
+
+void APlayerCharacter::ReduceBullets(int count)
+{
+	BulletCount -= count;
+}
+
+void APlayerCharacter::OnPlayerCollidedWithObstacles()
+{
+	ReduceBullets(5);
 }

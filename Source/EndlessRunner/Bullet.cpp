@@ -40,7 +40,7 @@ void ABullet::Tick(float DeltaTime)
 void ABullet::OnBulletHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalImpulse, const FHitResult& Hit)
 {
 	CheckIfGlassHit(OtherActor);
-	UE_LOG(LogTemp,Warning,TEXT("Hit: %s"),*OtherActor->GetName());
+	//UE_LOG(LogTemp,Warning,TEXT("Hit: %s"),*OtherActor->GetName());
 }
 
 void ABullet::CheckIfGlassHit(AActor* OtherActor)

@@ -19,7 +19,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	
 	#pragma region Virtual Funtions
         	
     virtual void Tick(float DeltaTime) override;
@@ -46,7 +47,19 @@ public:
      * @brief CHECKS THE CONDITIONS FOR BULLET TO BE FIRED. IF TRUE, FIRES THE BULLET 
      */
     void FireBullet();
-    
+
+	/**
+	 * @brief REDUCES THE BULLET COUNT OF THE PLAYER
+	 * @param count NO. OF BULLETS THAT NEEDS TO BE REDUCED
+	 * 
+	 */
+	void ReduceBullets(int count);
+
+	/**
+	 * @brief CALLED WHEN THE PLAYER COLLIDES WITH OBSTACLES LIKE GLASS PANELS,ETC.
+	 */
+	void OnPlayerCollidedWithObstacles();
+	
     #pragma endregion 
 
     #pragma region MOVEMENT
@@ -70,6 +83,14 @@ public:
     USceneComponent* BulletSpawnPoint;
 
     #pragma endregion 
-    	
+
+	#pragma region HUDS
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> HUDClass;
+
+	UUserWidget* Hud;
+	
+	#pragma endregion 
 
 };

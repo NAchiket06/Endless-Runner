@@ -3,6 +3,7 @@
 
 #include "PlayerCharacter.h"
 
+#include "EndlessRunnerGameModeBase.h"
 #include "Blueprint/UserWidget.h"
 
 // Sets default values
@@ -24,7 +25,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+		
 	AddMovementInput(FVector(1,0,0) * MovementSpeed * DeltaTime);
 }
 
@@ -42,16 +43,28 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::LookRightRotation(float value)
 {
+	if(IsGameOver)
+	{
+		return;
+	}
 	AddControllerYawInput(value * RotationSpeed);
 }
 
 void APlayerCharacter::LookUpRotation(float value)
 {
+	if(IsGameOver)
+	{
+		return;
+	}
 	AddControllerPitchInput(-value * RotationSpeed);
 }
 
 void APlayerCharacter::FireBullet()
 {
+	if(IsGameOver)
+	{
+		return;
+	}
 	if(BulletCount == 0)
 	{
 		UE_LOG(LogTemp,Warning,TEXT("No bullets left."));
@@ -67,18 +80,42 @@ void APlayerCharacter::FireBullet()
 	ReduceBullets(1);
 }
 
-void APlayerCharacter::ReduceBullets(int count)
-{
-	BulletCount -= count;
-}
 
 void APlayerCharacter::OnPlayerCollidedWithObstacles()
 {
+	if(IsGameOver)
+	{
+		return;
+	}
 	ReduceBullets(5);
+
+	AEndlessRunnerGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEndlessRunnerGameModeBase>();
+	if(GameMode != nullptr)
+	{
+		GameMode->OnPlayerCollidedWithGlass(BulletCount);
+	}
 }
+
+void APlayerCharacter::ReduceBullets(int count)
+{
+	BulletCount-= count;
+
+	if(BulletCount <=0 )
+	{
+		BulletCount = 0;
+		EndGame();
+	}
+}
+
 
 int APlayerCharacter::ReturnBulletCount() const
 {
-
 	return BulletCount;
 }
+
+void APlayerCharacter::EndGame()
+{
+	IsGameOver = true;
+	MovementSpeed = 0;
+}
+

@@ -2,6 +2,8 @@
 
 
 #include "ShooterPlayerController.h"
+
+#include "PlayerCharacter.h"
 #include "Blueprint/UserWidget.h"
 
 void AShooterPlayerController::BeginPlay()
@@ -13,5 +15,18 @@ void AShooterPlayerController::BeginPlay()
 	{
 		Hud->AddToViewport();
 	}
-
 }
+
+void AShooterPlayerController::GameHasEnded(AActor* EndGameFocus, bool bIsWinner)
+{
+	Super::GameHasEnded(EndGameFocus, bIsWinner);
+
+	Hud->RemoveFromViewport();
+	EndGame = CreateWidget(this, EndGameClass);
+	if(EndGame != nullptr)
+	{
+		EndGame->AddToViewport();
+	}
+}
+
+

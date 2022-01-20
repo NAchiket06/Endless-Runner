@@ -62,6 +62,9 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	int ReturnBulletCount() const;
+
+	UFUNCTION()
+	void EndGame();
 	
     #pragma endregion 
 
@@ -87,5 +90,7 @@ public:
 
     #pragma endregion 
 
+
+	bool IsGameOver = false;
 
 };

@@ -22,8 +22,8 @@ AGlass::AGlass()
 void AGlass::BeginPlay()
 {
 	Super::BeginPlay();
-	GlassMesh->OnComponentHit.AddUniqueDynamic(this,&AGlass::OnCollision);
-	//GlassMesh->OnComponentBeginOverlap.AddDynamic(this,&AGlass::OnOverlap);
+	//GlassMesh->OnComponentHit.AddUniqueDynamic(this,&AGlass::OnCollision);
+	GlassMesh->OnComponentBeginOverlap.AddDynamic(this,&AGlass::OnCollision);
 }
 
 // Called every frame
@@ -38,11 +38,13 @@ void AGlass::Tick(float DeltaTime)
 	}
 }
 
-void AGlass::OnCollision(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AGlass::OnCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 
 	GlassMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SetLifeSpan(5);
+
+	//UE_LOG(LogTemp,Warning,other)
 
 	// CHECK IF THE ACTOR THAT HIT WAS BULLET
 	ABullet* BulletComponent = Cast<ABullet>(OtherActor);
@@ -59,14 +61,11 @@ void AGlass::OnCollision(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 	APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor);
 	if(Player != nullptr)
 	{
-		UE_LOG(LogTemp,Warning,TEXT("Glass hit Player."));
-
 		Player->OnPlayerCollidedWithObstacles();
 
 		// REDUCE PLAYER BULLET COUNT
 
 		// PLAYER PLAYER HIT EFFECTS
-
 	}
 
 	

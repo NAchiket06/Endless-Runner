@@ -17,6 +17,8 @@ class ENDLESSRUNNER_API AShooterPlayerController : public APlayerController
 protected:
 	virtual void BeginPlay() override;
 
+	virtual void GameHasEnded(AActor* EndGameFocus, bool bIsWinner) override;
+
 private:
 	
 	#pragma region HUDS
@@ -25,12 +27,19 @@ private:
 	TSubclassOf<class UUserWidget> HUDClass;
 
 	UUserWidget* Hud;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> EndGameClass;
+
+	UUserWidget* EndGame;
 	/*
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UUserWidget> HUDClass;
 
 	UUserWidget* Hud;
 	*/
-	#pragma endregion 
+	#pragma endregion
+
+	#pragma  region FUNCTIONS
 	
 };

@@ -13,5 +13,11 @@ UCLASS()
 class ENDLESSRUNNER_API AEndlessRunnerGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+private:
+	virtual void BeginPlay() override;
+public: 
+	void OnPlayerCollidedWithGlass(int RemainingBullets);
+
+	void EndGame();
 };

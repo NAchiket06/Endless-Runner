@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "EndlessRunnerGameModeBase.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -92,5 +93,7 @@ public:
 
 
 	bool IsGameOver = false;
+	
+	AEndlessRunnerGameModeBase* GameMode;
 
 };

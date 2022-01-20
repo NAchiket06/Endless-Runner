@@ -3,7 +3,6 @@
 
 #include "PlayerCharacter.h"
 
-#include "EndlessRunnerGameModeBase.h"
 #include "Blueprint/UserWidget.h"
 
 // Sets default values
@@ -19,6 +18,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GameMode = GetWorld()->GetAuthGameMode<AEndlessRunnerGameModeBase>();
 }
 
 // Called every frame
@@ -89,7 +89,6 @@ void APlayerCharacter::OnPlayerCollidedWithObstacles()
 	}
 	ReduceBullets(5);
 
-	AEndlessRunnerGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AEndlessRunnerGameModeBase>();
 	if(GameMode != nullptr)
 	{
 		GameMode->OnPlayerCollidedWithGlass(BulletCount);
@@ -116,6 +115,7 @@ int APlayerCharacter::ReturnBulletCount() const
 void APlayerCharacter::EndGame()
 {
 	IsGameOver = true;
+	GameMode->EndGame();
 	MovementSpeed = 0;
 }
 

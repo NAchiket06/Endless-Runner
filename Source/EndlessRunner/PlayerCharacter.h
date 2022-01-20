@@ -59,6 +59,9 @@ public:
 	 * @brief CALLED WHEN THE PLAYER COLLIDES WITH OBSTACLES LIKE GLASS PANELS,ETC.
 	 */
 	void OnPlayerCollidedWithObstacles();
+
+	UFUNCTION(BlueprintPure)
+	int ReturnBulletCount() const;
 	
     #pragma endregion 
 
@@ -84,13 +87,5 @@ public:
 
     #pragma endregion 
 
-	#pragma region HUDS
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> HUDClass;
-
-	UUserWidget* Hud;
-	
-	#pragma endregion 
 
 };

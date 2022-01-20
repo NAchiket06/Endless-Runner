@@ -18,12 +18,6 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Hud = CreateWidget(this, HUDClass);
-	if(Hud != nullptr)
-	{
-		Hud->AddToViewport(0);
-	}
-	
 }
 
 // Called every frame
@@ -48,12 +42,12 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::LookRightRotation(float value)
 {
-	AddControllerYawInput(value);
+	AddControllerYawInput(value * RotationSpeed);
 }
 
 void APlayerCharacter::LookUpRotation(float value)
 {
-	AddControllerPitchInput(-value);
+	AddControllerPitchInput(-value * RotationSpeed);
 }
 
 void APlayerCharacter::FireBullet()
@@ -81,4 +75,10 @@ void APlayerCharacter::ReduceBullets(int count)
 void APlayerCharacter::OnPlayerCollidedWithObstacles()
 {
 	ReduceBullets(5);
+}
+
+int APlayerCharacter::ReturnBulletCount() const
+{
+
+	return BulletCount;
 }

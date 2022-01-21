@@ -7,10 +7,70 @@
 #include "PlayerCharacter.h"
 #include "ShooterPlayerController.h"
 
+AEndlessRunnerGameModeBase::AEndlessRunnerGameModeBase()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
 void AEndlessRunnerGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp,Warning,TEXT("Endless Runner Game mode active."));
+	
+	GetPlayerPawn();
+	
+	LevelModulesLength = LevelModules.Num();
+
+	for(int i=0;i<10;i++)
+	{
+		SpawnLevelModules();
+	}
+}
+
+void AEndlessRunnerGameModeBase::GetPlayerPawn()
+{
+	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	if(Player == nullptr)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Player not found."));
+	}
+	else
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Player found."));
+	}
+}
+
+void AEndlessRunnerGameModeBase::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	if(Player != nullptr && ShouldSpawn)
+	{
+		TimeSinceLastSpawn += DeltaSeconds;
+		
+		if(TimeSinceLastSpawn >= SpawnDelay)
+		{
+			SpawnLevelModules();
+			TimeSinceLastSpawn =0;
+		}
+	}
+}
+void AEndlessRunnerGameModeBase::SpawnLevelModules()
+{
+	if(!ShouldSpawn) return;
+	
+	if(LevelModulesLength == 0)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("No modules to spawn."));
+	}
+	int Random = FMath::RandRange(0,LevelModulesLength);
+
+	AActor* SpawnedModule = GetWorld()->SpawnActor<AActor>(LevelModules[0],SpawnLocation,SpawnRotation,SpawnParams);
+	SpawnedModule->SetLifeSpan(ModuleLifeSpan);
+
+	SpawnLocation.X += 1000;
+	
 }
 
 void AEndlessRunnerGameModeBase::OnPlayerCollidedWithGlass(int RemainingBullets)
@@ -31,4 +91,7 @@ void AEndlessRunnerGameModeBase::EndGame()
 	{
 		PlayerController->GameHasEnded(PlayerController->GetPawn(),true);
 	}
+
+	ShouldSpawn = false;
 }
+

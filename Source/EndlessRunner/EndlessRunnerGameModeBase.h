@@ -67,7 +67,10 @@ public:
 	float ModuleLifeSpan = 40.f;
 
 	UPROPERTY(EditAnywhere)
-	FVector SpawnLocation = FVector(4400,0,0);
+	FVector StartSpawnLocation = FVector(4400,0,0);
+
+	UPROPERTY(EditAnywhere)
+	float SpawnOffset = 2000;
 	
 	UPROPERTY(EditAnywhere)
 	FRotator SpawnRotation = FRotator(0,0,0);

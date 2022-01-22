@@ -66,10 +66,10 @@ void AEndlessRunnerGameModeBase::SpawnLevelModules()
 	}
 	int Random = FMath::RandRange(0,LevelModulesLength);
 
-	AActor* SpawnedModule = GetWorld()->SpawnActor<AActor>(LevelModules[0],SpawnLocation,SpawnRotation,SpawnParams);
+	AActor* SpawnedModule = GetWorld()->SpawnActor<AActor>(LevelModules[0],StartSpawnLocation,SpawnRotation,SpawnParams);
 	SpawnedModule->SetLifeSpan(ModuleLifeSpan);
 
-	SpawnLocation.X += 1000;
+	StartSpawnLocation.X += SpawnOffset;
 	
 }
 

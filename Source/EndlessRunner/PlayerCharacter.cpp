@@ -106,6 +106,11 @@ void APlayerCharacter::ReduceBullets(int count)
 	}
 }
 
+void APlayerCharacter::IncreaseBullets(int count)
+{
+	BulletCount += count;
+}
+
 
 int APlayerCharacter::ReturnBulletCount() const
 {

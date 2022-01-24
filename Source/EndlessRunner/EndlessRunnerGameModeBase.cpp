@@ -64,9 +64,9 @@ void AEndlessRunnerGameModeBase::SpawnLevelModules()
 	{
 		UE_LOG(LogTemp,Warning,TEXT("No modules to spawn."));
 	}
-	int Random = FMath::RandRange(0,LevelModulesLength);
+	int Random = FMath::RandRange(0,LevelModulesLength-1);
 
-	AActor* SpawnedModule = GetWorld()->SpawnActor<AActor>(LevelModules[0],StartSpawnLocation,SpawnRotation,SpawnParams);
+	AActor* SpawnedModule = GetWorld()->SpawnActor<AActor>(LevelModules[Random],StartSpawnLocation,SpawnRotation,SpawnParams);
 	SpawnedModule->SetLifeSpan(ModuleLifeSpan);
 
 	StartSpawnLocation.X += SpawnOffset;

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GeometryCollection/GeometryCollectionComponent.h"
 #include "Glass.generated.h"
 
 UCLASS()
@@ -24,6 +25,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* GlassMesh;
+
+	UPROPERTY(EditAnywhere)
+	UGeometryCollectionComponent* FractureMesh;
 
 	
 

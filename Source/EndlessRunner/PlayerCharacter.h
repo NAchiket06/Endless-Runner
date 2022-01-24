@@ -57,6 +57,12 @@ public:
 	void ReduceBullets(int count);
 
 	/**
+	 * @brief INCREASES THE BULLET COUNT OF THE PLAYER
+	 * @param count  NO. OF BULLETS THAT NEEDS TO BE INCREASED
+	 */
+	void IncreaseBullets(int count);
+
+	/**
 	 * @brief CALLED WHEN THE PLAYER COLLIDES WITH OBSTACLES LIKE GLASS PANELS,ETC.
 	 */
 	void OnPlayerCollidedWithObstacles();

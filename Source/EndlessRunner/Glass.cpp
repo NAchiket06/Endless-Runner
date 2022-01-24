@@ -16,6 +16,8 @@ AGlass::AGlass()
 	GlassMesh->SetupAttachment(RootComponent);
 
 	
+
+	
 }
 
 // Called when the game starts or when spawned
